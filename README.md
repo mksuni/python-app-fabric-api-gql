@@ -1,6 +1,8 @@
 # Python app using Fabric API for GraphQL
 
-This project is a sample implementation of a GraphQL server using Python. It demonstrates how to set up a GraphQL API with basic queries. 
+This project is a sample implementation of a using [Fabric API for GraphQL](https://learn.microsoft.com/fabric/data-engineering/api-graphql-overview) with a Flask Application to get data from Fabric SQL database.
+
+![image](Sample_app.png)
 
 ## Pre-requisites
 
