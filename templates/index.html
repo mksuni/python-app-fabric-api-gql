@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Data</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    h1 {
+        color: #333;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+</style>
+<body>
+    <h1>Customer Data</h1>
+    <button id="send-btn">Get first 5 customers</button>
+    <table id="customerTable" border="1" style="display: none;">
+        <thead>
+            <tr>
+                <th>CustomerID</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>EmailAddress</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be populated here -->
+        </tbody>
+    </table>
+    <h1>Products and Descriptions</h1>
+    <button id="product-btn">Get first 5 products filtered by </button>
+    <table id="productTable" border="1" style="display: none;">
+        <thead>
+            <tr>
+                <th>ProductID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>ProductModel</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be populated here -->
+        </tbody>
+    </table>
+    <h1>Categories</h1>
+    <button id="category-btn">Get all product categories</button>
+    <table id="categoryTable" border="1" style="display: none;">
+        <thead>
+            <tr>
+                <th>ProductCategoryID</th>
+                <th>ParentProductCategoryName</th>
+                <th>ProductCategoryName</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be populated here -->
+        </tbody>
+    </table>
+
+
+    <script>
+        document.getElementById('send-btn').addEventListener('click', function() {
+            fetch('/api/gql')
+                .then(response => response.json())
+                .then(data => {
+                    const table = document.getElementById('customerTable');
+                    const tbody = table.querySelector('tbody');
+                    tbody.innerHTML = ''; // Clear existing data
+
+                    data.data.customers.items.forEach(customer => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${customer.CustomerID}</td>
+                            <td>${customer.FirstName}</td>
+                            <td>${customer.LastName}</td>
+                            <td>${customer.EmailAddress}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+
+                    table.style.display = 'table'; // Show the table
+                })
+                .catch(error => console.error('Error fetching customer data:', error));
+        });
+        document.getElementById('product-btn').addEventListener('click', function() {
+            fetch('/api/gql')
+                .then(response => response.json())
+                .then(data => {
+                    const table = document.getElementById('productTable');
+                    const tbody = table.querySelector('tbody');
+                    tbody.innerHTML = ''; // Clear existing data
+
+                    data.data.vProductAndDescriptions.items.forEach(product => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${product.ProductID}</td>
+                            <td>${product.Name}</td>
+                            <td>${product.Description}</td>
+                            <td>${product.ProductModel}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+
+                    table.style.display = 'table'; // Show the table
+                })
+                .catch(error => console.error('Error fetching product data:', error));
+        });
+
+        document.getElementById('category-btn').addEventListener('click', function() {
+            fetch('/api/gql')
+                .then(response => response.json())
+                .then(data => {
+                    const table = document.getElementById('categoryTable');
+                    const tbody = table.querySelector('tbody');
+                    tbody.innerHTML = ''; // Clear existing data
+
+                    data.data.vGetAllCategories.items.forEach(category => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${category.ProductCategoryID}</td>
+                            <td>${category.ParentProductCategoryName}</td>
+                            <td>${category.ProductCategoryName}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+
+                    table.style.display = 'table'; // Show the table
+                })
+                .catch(error => console.error('Error fetching category data:', error));
+        });
+    </script>
+
+</body>
+</html>
