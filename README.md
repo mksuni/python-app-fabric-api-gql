@@ -72,17 +72,6 @@ query{
          }
 ```
 
-### Mutation
-```graphql
-mutation {
-  createItem(name: "Sample Item", description: "This is a sample item") {
-    id
-    name
-    description
-  }
-}
-```
-
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any changes.
