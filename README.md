@@ -1,4 +1,4 @@
-# Python app using Fabric API for GraphQL
+# Build a data app using Fabric API for GraphQL
 
 This project is a sample implementation of a using [Fabric API for GraphQL](https://learn.microsoft.com/fabric/data-engineering/api-graphql-overview) with a Flask Application to get data from Fabric SQL database.
 
@@ -82,6 +82,14 @@ mutation {
   }
 }
 ```
+
+## Deploy the app
+1. Install Azure CLI to deploy the app to azure. If you dont have an Azure subscription, try fo free. 
+2. Run ```az webapp up``` to deploy the app to Azure Web Apps.  Note the resource group being created.
+3. Login into the Azure portal and open the newly created resource group. 
+4. Select the web app resource created and browse the application
+
+If you run into any issues , check **Application logs** in **Diagnose and solve**. 
 
 ## Contributing
 

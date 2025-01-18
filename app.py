@@ -3,15 +3,16 @@ from azure.identity import ClientSecretCredential
 import requests
 import json
 from flask import Flask, jsonify, render_template
+import os
 
 app = Flask(__name__)
 
 # Azure Service Principal credentials
-TENANT_ID = "your-tenant-id"
-CLIENT_ID = "your-client-id"
-CLIENT_SECRET = "your-client-secret"
+TENANT_ID = os.environ["TENANTID"]
+CLIENT_ID = os.environ["CLIENTID"]
+CLIENT_SECRET = os.environ["CLIENTSECRET"]
 FABRIC_API_SCOPE = "https://analysis.windows.net/powerbi/api/.default"
-FABRIC_GRAPHQL_ENDPOINT = "https://api.fabric.microsoft.com/graphql"
+FABRIC_GRAPHQL_ENDPOINT = os.environ["FABRIC_GRAPHQL_ENDPOINT"]
 
 # Authenticate using the Service Principal
 credential = ClientSecretCredential(
